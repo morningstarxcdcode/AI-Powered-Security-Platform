@@ -1,0 +1,14 @@
+# Voice Assistant Requirements for Scout CLI
+# Text-to-speech engine
+pyttsx3>=2.90
+
+# Audio recording and playback
+sounddevice>=0.4.6
+soundfile>=0.12.1
+
+# Speech recognition
+SpeechRecognition>=3.10.0
+pyaudio>=0.2.11
+
+# Optional: Faster speech recognition (requires internet)
+# google-cloud-speech>=2.21.0

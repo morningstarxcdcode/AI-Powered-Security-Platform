@@ -1,0 +1,319 @@
+name: Community Management
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+  schedule:
+    - cron: '0 12 * * 1'  # Every Monday at noon
+
+jobs:
+  welcome:
+    name: Welcome New Contributors
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' || github.event_name == 'pull_request'
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+    - name: Welcome new contributors
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const isIssue = !!context.payload.issue;
+          const isPR = !!context.payload.pull_request;
+          const item = context.payload.issue || context.payload.pull_request;
+          const author = item.user.login;
+
+          // Check if this is the user's first contribution
+          const { data: contributions } = await github.rest.repos.listContributors({
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
+
+          const isFirstTime = !contributions.some(contributor => contributor.login === author);
+
+          if (isFirstTime) {
+            let message = '';
+
+            if (isIssue) {
+              message = `👋 Welcome to Scout CLI, @${author}! Thank you for opening your first issue.
+
+              🔍 **What happens next?**
+              - Our team will review your issue and add appropriate labels
+              - If you're reporting a bug, please ensure you've included steps to reproduce
+              - If you're requesting a feature, please describe your use case
+
+              📚 **Getting Started:**
+              - Check out our [Contributing Guide](CONTRIBUTING.md)
+              - Browse our [Documentation](README.md)
+              - Join our community discussions
+
+              🚀 **Want to contribute?**
+              - Look for issues labeled \`good first issue\`
+              - Check out our [development setup guide](CONTRIBUTING.md#development-setup)
+              - Feel free to ask questions!
+
+              Thanks for helping make Scout CLI better! 🛡️`;
+
+            } else if (isPR) {
+              message = `🎉 Thank you for your first pull request to Scout CLI, @${author}!
+
+              ✅ **What happens next?**
+              - Our automated tests will run to validate your changes
+              - A maintainer will review your code and provide feedback
+              - We may ask for changes or additional tests
+
+              📋 **PR Checklist:**
+              - [ ] Tests pass locally (\`pytest tests/\`)
+              - [ ] Code follows our style guidelines (\`black scout/ tests/\`)
+              - [ ] Documentation updated if needed
+              - [ ] Security considerations addressed
+
+              🔧 **Development Tips:**
+              - Run \`pre-commit install\` to set up automatic code checks
+              - Use \`scout --help\` to test your changes
+              - Check our [Contributing Guide](CONTRIBUTING.md) for more details
+
+              We appreciate your contribution to the security community! 🛡️`;
+            }
+
+            if (isIssue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: item.number,
+                body: message
+              });
+            } else {
+              await github.rest.pulls.createReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: item.number,
+                body: message,
+                event: 'COMMENT'
+              });
+            }
+          }
+
+  stale-management:
+    name: Manage Stale Issues and PRs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/stale@v8
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+        # Issues
+        stale-issue-message: |
+          📅 This issue has been automatically marked as stale because it has had no activity for 60 days.
+
+          🔄 **To keep this issue active:**
+          - Add a comment with updates or additional information
+          - Reference it in a pull request
+          - Add the `pinned` label to prevent auto-closure
+
+          ⏰ **What happens next:**
+          - This issue will be automatically closed in 14 days if no activity occurs
+          - You can always reopen closed issues if needed
+
+          Thanks for your contribution to Scout CLI! 🛡️
+        close-issue-message: |
+          🔒 This issue has been automatically closed due to inactivity.
+
+          If you believe this issue is still relevant, please:
+          - Reopen the issue
+          - Provide updated information
+          - Reference any new developments
+
+          Thank you for your understanding! 🛡️
+
+        # Pull Requests
+        stale-pr-message: |
+          📅 This pull request has been automatically marked as stale because it has had no activity for 30 days.
+
+          🔄 **To keep this PR active:**
+          - Push new commits or respond to review feedback
+          - Add a comment explaining the current status
+          - Add the `pinned` label to prevent auto-closure
+
+          ⏰ **What happens next:**
+          - This PR will be automatically closed in 14 days if no activity occurs
+          - You can always reopen closed PRs and continue your work
+
+          Thanks for your contribution to Scout CLI! 🛡️
+        close-pr-message: |
+          🔒 This pull request has been automatically closed due to inactivity.
+
+          If you'd like to continue this work:
+          - Reopen the pull request
+          - Rebase against the latest main branch
+          - Address any review feedback
+
+          Thank you for your contribution! 🛡️
+
+        # Timing
+        days-before-issue-stale: 60
+        days-before-pr-stale: 30
+        days-before-issue-close: 14
+        days-before-pr-close: 14
+
+        # Labels
+        stale-issue-label: 'stale'
+        stale-pr-label: 'stale'
+        exempt-issue-labels: 'pinned,security,vulnerability,enhancement'
+        exempt-pr-labels: 'pinned,security,work-in-progress'
+
+        # Options
+        remove-stale-when-updated: true
+        enable-statistics: true
+
+  metrics-report:
+    name: Generate Community Metrics
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    permissions:
+      issues: read
+      pull-requests: read
+
+    steps:
+    - name: Generate community metrics
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const oneMonthAgo = new Date();
+          oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+          // Get issues from last month
+          const { data: issues } = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'all',
+            since: oneMonthAgo.toISOString(),
+            per_page: 100
+          });
+
+          // Get pull requests from last month
+          const { data: pulls } = await github.rest.pulls.list({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'all',
+            sort: 'created',
+            direction: 'desc',
+            per_page: 100
+          });
+
+          const recentPulls = pulls.filter(pr => new Date(pr.created_at) > oneMonthAgo);
+
+          // Calculate metrics
+          const newIssues = issues.filter(issue => !issue.pull_request && new Date(issue.created_at) > oneMonthAgo);
+          const closedIssues = issues.filter(issue => !issue.pull_request && issue.state === 'closed' && new Date(issue.closed_at) > oneMonthAgo);
+          const openIssues = issues.filter(issue => !issue.pull_request && issue.state === 'open');
+
+          const newPRs = recentPulls;
+          const mergedPRs = recentPulls.filter(pr => pr.merged_at);
+          const openPRs = pulls.filter(pr => pr.state === 'open');
+
+          // Get unique contributors
+          const contributors = new Set();
+          [...newIssues, ...newPRs].forEach(item => contributors.add(item.user.login));
+
+          // Generate report
+          const report = `## 📊 Scout CLI Community Metrics Report
+
+          **Generated on:** ${new Date().toISOString().split('T')[0]}
+          **Period:** Last 30 days
+
+          ### 📈 Activity Summary
+          - **New Issues:** ${newIssues.length}
+          - **Closed Issues:** ${closedIssues.length}
+          - **Open Issues:** ${openIssues.length}
+          - **New Pull Requests:** ${newPRs.length}
+          - **Merged Pull Requests:** ${mergedPRs.length}
+          - **Open Pull Requests:** ${openPRs.length}
+          - **Active Contributors:** ${contributors.size}
+
+          ### 🏷️ Issue Labels Distribution
+          ${newIssues.length > 0 ?
+            newIssues.reduce((acc, issue) => {
+              issue.labels.forEach(label => {
+                acc[label.name] = (acc[label.name] || 0) + 1;
+              });
+              return acc;
+            }, {})
+            : 'No new issues this period'
+          }
+
+          ### 🎯 Recommendations
+          - Continue monitoring issue response times
+          - Recognize active contributors
+          - Address any blocking issues
+          - Update documentation based on common questions
+
+          ---
+          *This report is automatically generated every Monday.*`;
+
+          console.log(report);
+
+          // Save as artifact would require additional setup
+          // For now, just log the metrics
+
+  dependency-update-notification:
+    name: Notify Dependency Updates
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    permissions:
+      issues: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Check for major dependency updates
+      uses: actions/github-script@v6
+      with:
+        script: |
+          // This would typically check for major version updates
+          // and create issues to track them
+
+          const majorUpdates = [
+            // This would be populated by actual dependency checking
+          ];
+
+          if (majorUpdates.length > 0) {
+            const issueBody = `## 🔄 Major Dependency Updates Available
+
+            The following major dependency updates are available for Scout CLI:
+
+            ${majorUpdates.map(update => `- **${update.name}**: ${update.currentVersion} → ${update.newVersion}`).join('\n')}
+
+            ### 📋 Action Items
+            - [ ] Review breaking changes for each dependency
+            - [ ] Test compatibility with Scout CLI
+            - [ ] Update code if necessary
+            - [ ] Update documentation
+            - [ ] Create pull request with updates
+
+            ### ⚠️ Important Notes
+            - Major version updates may include breaking changes
+            - Test thoroughly in development environment
+            - Review security implications
+            - Update CI/CD pipelines if needed
+
+            ---
+            *This issue was automatically created by the community management workflow.*`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🔄 Major Dependency Updates Available',
+              body: issueBody,
+              labels: ['dependencies', 'enhancement', 'automated']
+            });
+          }

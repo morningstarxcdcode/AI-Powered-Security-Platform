@@ -1,0 +1,19 @@
+# Scout CLI - Web3/Blockchain Requirements
+# Blockchain security analysis dependencies
+
+# Core Web3
+web3>=6.12.0
+eth-account>=0.10.0
+eth-utils>=2.3.0
+
+# Additional blockchain libraries
+ecdsa>=0.18.0
+base58>=2.1.1
+
+# Data analysis for DeFi
+pandas>=2.1.0
+numpy>=1.24.0
+
+# Networking for blockchain
+aiohttp>=3.9.0
+requests>=2.31.0

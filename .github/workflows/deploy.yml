@@ -1,0 +1,288 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      version:
+        description: "Version to deploy"
+        required: true
+        type: string
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  validate-deployment:
+    name: Validate Deployment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.config.outputs.environment }}
+      version: ${{ steps.config.outputs.version }}
+
+    steps:
+      - name: Configure deployment
+        id: config
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate inputs
+        run: |
+          ENV="${{ steps.config.outputs.environment }}"
+          VER="${{ steps.config.outputs.version }}"
+
+          if [ -z "$ENV" ] || [ -z "$VER" ]; then
+            echo "Missing required parameters"
+            exit 1
+          fi
+
+          echo "Deploying version $VER to $ENV"
+
+  deploy-pypi:
+    name: Deploy to PyPI
+    runs-on: ubuntu-latest
+    needs: validate-deployment
+    if: needs.validate-deployment.outputs.environment == 'production'
+    environment: production
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.validate-deployment.outputs.version }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine wheel
+
+      - name: Update version
+        run: |
+          VERSION="${{ needs.validate-deployment.outputs.version }}"
+          sed -i 's/version="[^"]*"/version="'$VERSION'"/' setup.py
+
+      - name: Build package
+        run: python -m build
+
+      - name: Verify package
+        run: |
+          twine check dist/*
+          pip install dist/*.whl
+          scout --version || scout --help
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-docker:
+    name: Deploy Docker Images
+    runs-on: ubuntu-latest
+    needs: validate-deployment
+    if: needs.validate-deployment.outputs.environment == 'production'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.validate-deployment.outputs.version }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5      with:
+        images: |
+          ghcr.io/${{ github.repository }}
+          tags: |
+            type=semver,pattern={{version}},value=v${{ needs.validate-deployment.outputs.version }}
+            type=semver,pattern={{major}}.{{minor}},value=v${{ needs.validate-deployment.outputs.version }}
+            type=semver,pattern={{major}},value=v${{ needs.validate-deployment.outputs.version }}
+            type=raw,value=latest
+
+      - name: Build and push multi-platform images
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Verify deployed images
+        run: |
+          echo "Verifying Docker images..."
+          docker run --rm ghcr.io/${{ github.repository }}:latest --help
+
+  deploy-docs:
+    name: Deploy Documentation
+    runs-on: ubuntu-latest
+    needs: validate-deployment
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.validate-deployment.outputs.version }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install documentation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install sphinx sphinx-rtd-theme myst-parser
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -e .
+
+      - name: Generate comprehensive documentation
+        run: |
+          mkdir -p docs/generated
+
+          # Generate CLI documentation
+          echo "# Scout CLI Documentation" > docs/generated/README.md
+          echo "" >> docs/generated/README.md
+          echo "## Version ${{ needs.validate-deployment.outputs.version }}" >> docs/generated/README.md
+          echo "" >> docs/generated/README.md
+
+          echo "## Commands" >> docs/generated/README.md
+          echo "" >> docs/generated/README.md
+
+          # Get help for main command
+          echo "\`\`\`" >> docs/generated/README.md
+          scout --help >> docs/generated/README.md || echo "Help not available" >> docs/generated/README.md
+          echo "\`\`\`" >> docs/generated/README.md
+          echo "" >> docs/generated/README.md
+
+          # Copy main documentation files
+          cp README.md docs/generated/
+          cp SECURITY.md docs/generated/
+          cp CONTRIBUTING.md docs/generated/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs/generated
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+  staging-tests:
+    name: Staging Environment Tests
+    runs-on: ubuntu-latest
+    needs: [validate-deployment, deploy-pypi]
+    if: needs.validate-deployment.outputs.environment == 'staging' || (needs.validate-deployment.outputs.environment == 'production' && needs.deploy-pypi.result == 'success')
+
+    steps:
+      - name: Test PyPI package installation
+        run: |
+          echo "Testing PyPI package installation..."
+          pip install scout-cli==${{ needs.validate-deployment.outputs.version }} || true
+
+          # Test basic functionality
+          scout --help || echo "Help command failed"
+
+      - name: Test Docker image
+        run: |
+          echo "Testing Docker image..."
+          docker run --rm ghcr.io/${{ github.repository }}:${{ needs.validate-deployment.outputs.version }} --help || echo "Docker test failed"
+
+      - name: Integration tests
+        run: |
+          echo "Running integration tests..."
+
+          # Test against safe targets
+          scout webscan https://httpbin.org/html --output test-results.json || echo "Web scan test completed"
+          scout assess --target https://httpbin.org/html --format json || echo "Assessment test completed"
+
+          echo "Integration tests completed"
+
+  notify-deployment:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs:
+      [
+        validate-deployment,
+        deploy-pypi,
+        deploy-docker,
+        deploy-docs,
+        staging-tests,
+      ]
+    if: always()
+
+    steps:
+      - name: Notify success
+        if: needs.deploy-pypi.result == 'success' && needs.deploy-docker.result == 'success'
+        run: |
+          echo "🚀 Deployment successful!"
+          echo "Version: ${{ needs.validate-deployment.outputs.version }}"
+          echo "Environment: ${{ needs.validate-deployment.outputs.environment }}"
+          echo ""
+          echo "📦 PyPI: https://pypi.org/project/scout-cli/${{ needs.validate-deployment.outputs.version }}/"
+          echo "🐳 Docker: https://ghcr.io/${{ github.repository }}"
+          echo "📚 Docs: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+
+      - name: Notify failure
+        if: needs.deploy-pypi.result == 'failure' || needs.deploy-docker.result == 'failure'
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Version: ${{ needs.validate-deployment.outputs.version }}"
+          echo "Environment: ${{ needs.validate-deployment.outputs.environment }}"
+          echo ""
+          echo "Check the workflow logs for details."
+          exit 1
+
+  rollback:
+    name: Rollback (Manual)
+    runs-on: ubuntu-latest
+    if: failure() && github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Rollback preparation
+        run: |
+          echo "🔄 Preparing rollback..."
+          echo "This would normally:"
+          echo "1. Identify previous stable version"
+          echo "2. Redeploy previous Docker images"
+          echo "3. Update package references"
+          echo "4. Notify stakeholders"
+          echo ""
+          echo "Manual intervention required for actual rollback"

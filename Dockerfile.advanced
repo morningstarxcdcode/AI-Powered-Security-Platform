@@ -1,0 +1,74 @@
+# Advanced development environment configuration for Scout CLI
+# Modern tooling, IDE integrations, and developer experience enhancements
+
+# Multi-stage build for optimized production and development images
+FROM python:3.11-slim as base
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user for security
+RUN useradd --create-home --shell /bin/bash scout
+WORKDIR /home/scout
+
+# Copy requirements first for better Docker layer caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Development stage with additional tools
+FROM base as development
+
+# Install development dependencies
+RUN pip install --no-cache-dir \
+    ipython \
+    jupyter \
+    black \
+    flake8 \
+    mypy \
+    pytest \
+    pytest-cov \
+    pre-commit
+
+# Install Node.js for frontend development (dashboard)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+# Copy source code
+COPY --chown=scout:scout . .
+
+# Install Scout CLI in development mode
+RUN pip install -e .
+
+# Switch to non-root user
+USER scout
+
+# Expose ports for development services
+EXPOSE 8000 8888 3000
+
+# Development command
+CMD ["bash"]
+
+# Production stage
+FROM base as production
+
+# Copy only necessary files
+COPY --chown=scout:scout scout/ ./scout/
+COPY --chown=scout:scout setup.py pyproject.toml README.md ./
+
+# Install Scout CLI
+RUN pip install .
+
+# Switch to non-root user
+USER scout
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import scout; print('OK')" || exit 1
+
+# Production command
+ENTRYPOINT ["scout"]
+CMD ["--help"]

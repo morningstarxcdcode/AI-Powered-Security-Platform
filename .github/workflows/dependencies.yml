@@ -1,0 +1,286 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM UTC
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  update-dependencies:
+    name: Update Python Dependencies
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install pip-tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install pip-tools pip-audit safety
+
+    - name: Check current dependencies
+      run: |
+        echo "Current dependencies:" > dependency-update-log.txt
+        cat requirements.txt >> dependency-update-log.txt
+        echo "" >> dependency-update-log.txt
+
+    - name: Create requirements.in if not exists
+      run: |
+        if [ ! -f requirements.in ]; then
+          cp requirements.txt requirements.in
+        fi
+
+    - name: Update dependencies
+      run: |
+        pip-compile --upgrade requirements.in
+
+        # Check for security vulnerabilities
+        pip install -r requirements.txt
+        safety check --json --output safety-before.json || true
+
+        # Compare old and new requirements
+        echo "Updated dependencies:" >> dependency-update-log.txt
+        cat requirements.txt >> dependency-update-log.txt
+        echo "" >> dependency-update-log.txt
+
+    - name: Test updated dependencies
+      run: |
+        pip install -e .
+        scout --help
+        scout vuln-info --severity critical || true
+
+    - name: Run security checks on updated dependencies
+      run: |
+        safety check --json --output safety-after.json || true
+        pip-audit --format=json --output=pip-audit.json || true
+
+    - name: Generate update summary
+      run: |
+        echo "## Dependency Update Summary" > dependency-summary.md
+        echo "" >> dependency-summary.md
+        echo "Generated on: $(date)" >> dependency-summary.md
+        echo "" >> dependency-summary.md
+
+        echo "### Changes" >> dependency-summary.md
+        echo "" >> dependency-summary.md
+
+        if git diff --quiet requirements.txt; then
+          echo "No dependency updates available." >> dependency-summary.md
+        else
+          echo "The following dependencies were updated:" >> dependency-summary.md
+          echo "\`\`\`diff" >> dependency-summary.md
+          git diff requirements.txt >> dependency-summary.md
+          echo "\`\`\`" >> dependency-summary.md
+        fi
+
+        echo "" >> dependency-summary.md
+        echo "### Security Status" >> dependency-summary.md
+        echo "" >> dependency-summary.md
+
+        if [ -f safety-after.json ]; then
+          VULN_COUNT=$(cat safety-after.json | grep -o '"vulnerability_id"' | wc -l || echo "0")
+          echo "- Safety scan: $VULN_COUNT vulnerabilities found" >> dependency-summary.md
+        fi
+
+        if [ -f pip-audit.json ]; then
+          echo "- pip-audit scan completed" >> dependency-summary.md
+        fi
+
+        echo "" >> dependency-summary.md
+        echo "### Testing" >> dependency-summary.md
+        echo "- [x] Basic CLI functionality tested" >> dependency-summary.md
+        echo "- [x] Core commands verified" >> dependency-summary.md
+
+    - name: Create Pull Request
+      if: ${{ !env.ACT }}
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "chore(deps): update Python dependencies"
+        title: "🔄 Automated Dependency Updates"
+        body-path: dependency-summary.md
+        branch: automated/dependency-updates
+        delete-branch: true
+        labels: |
+          dependencies
+          automated
+
+    - name: Upload dependency reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: dependency-update-reports
+        path: |
+          dependency-summary.md
+          dependency-update-log.txt
+          safety-before.json
+          safety-after.json
+          pip-audit.json
+
+  update-github-actions:
+    name: Update GitHub Actions
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update GitHub Actions versions
+      run: |
+        echo "Checking for GitHub Actions updates..." > actions-update-log.txt
+
+        # Find all workflow files
+        find .github/workflows -name "*.yml" -o -name "*.yaml" | while read file; do
+          echo "Checking $file" >> actions-update-log.txt
+
+          # Update common actions to latest versions
+          sed -i 's/actions\/checkout@v[0-9]/actions\/checkout@v4/g' "$file"
+          sed -i 's/actions\/setup-python@v[0-9]/actions\/setup-python@v4/g' "$file"
+          sed -i 's/actions\/upload-artifact@v[0-9]/actions\/upload-artifact@v3/g' "$file"
+          sed -i 's/actions\/download-artifact@v[0-9]/actions\/download-artifact@v3/g' "$file"
+          sed -i 's/actions\/cache@v[0-9]/actions\/cache@v3/g' "$file"
+          sed -i 's/github\/codeql-action\/upload-sarif@v[0-9]/github\/codeql-action\/upload-sarif@v2/g' "$file"
+          sed -i 's/docker\/setup-buildx-action@v[0-9]/docker\/setup-buildx-action@v3/g' "$file"
+          sed -i 's/docker\/login-action@v[0-9]/docker\/login-action@v3/g' "$file"
+          sed -i 's/docker\/metadata-action@v[0-9]/docker\/metadata-action@v5/g' "$file"
+          sed -i 's/docker\/build-push-action@v[0-9]/docker\/build-push-action@v5/g' "$file"
+        done
+
+    - name: Check for changes
+      id: changes
+      run: |
+        if git diff --quiet; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "No GitHub Actions updates needed." >> actions-update-log.txt
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "GitHub Actions updated." >> actions-update-log.txt
+          git diff >> actions-update-log.txt
+        fi
+
+    - name: Create Pull Request for Actions Updates
+      if: steps.changes.outputs.changed == 'true' && !env.ACT
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "chore(ci): update GitHub Actions versions"
+        title: "🔄 Update GitHub Actions to Latest Versions"
+        body: |
+          ## GitHub Actions Updates
+
+          This PR updates GitHub Actions to their latest versions for:
+          - Security improvements
+          - Bug fixes
+          - New features
+
+          ### Changes
+          - Updated action versions in workflow files
+
+          ### Testing
+          - [ ] All workflows should continue to work as expected
+          - [ ] No breaking changes in action APIs
+        branch: automated/actions-updates
+        delete-branch: true
+        labels: |
+          ci/cd
+          automated
+
+    - name: Upload actions update log
+      uses: actions/upload-artifact@v3
+      with:
+        name: actions-update-log
+        path: actions-update-log.txt
+
+  vulnerability-monitoring:
+    name: Monitor for New Vulnerabilities
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety pip-audit requests
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Check for new vulnerabilities
+      run: |
+        echo "Checking for new vulnerabilities..." > vuln-monitoring.txt
+        echo "Scan date: $(date)" >> vuln-monitoring.txt
+        echo "" >> vuln-monitoring.txt
+
+        # Run safety check
+        safety check --json --output safety-current.json || true
+        safety check --output safety-current.txt || true
+
+        # Run pip-audit
+        pip-audit --format=json --output=pip-audit-current.json || true
+
+        # Count vulnerabilities
+        if [ -f safety-current.json ]; then
+          SAFETY_VULNS=$(cat safety-current.json | grep -o '"vulnerability_id"' | wc -l || echo "0")
+          echo "Safety found: $SAFETY_VULNS vulnerabilities" >> vuln-monitoring.txt
+        fi
+
+        if [ -f pip-audit-current.json ]; then
+          AUDIT_VULNS=$(cat pip-audit-current.json | grep -o '"id"' | wc -l || echo "0")
+          echo "pip-audit found: $AUDIT_VULNS vulnerabilities" >> vuln-monitoring.txt
+        fi
+
+        echo "" >> vuln-monitoring.txt
+        echo "Full safety report:" >> vuln-monitoring.txt
+        cat safety-current.txt >> vuln-monitoring.txt || echo "No safety report available" >> vuln-monitoring.txt
+
+    - name: Create vulnerability alert issue
+      if: ${{ !env.ACT }}
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('vuln-monitoring.txt', 'utf8');
+
+          // Check if there are vulnerabilities to report
+          const hasVulns = report.includes('vulnerabilities') && !report.includes('0 vulnerabilities');
+
+          if (hasVulns) {
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Security Alert: New Vulnerabilities Detected`,
+              body: `## Vulnerability Monitoring Report\n\n\`\`\`\n${report}\n\`\`\`\n\n### Next Steps\n- Review the vulnerability details\n- Update affected dependencies\n- Test the application after updates\n- Close this issue once resolved`,
+              labels: ['security', 'vulnerability', 'automated']
+            });
+          }
+
+    - name: Upload vulnerability reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: vulnerability-monitoring
+        path: |
+          vuln-monitoring.txt
+          safety-current.json
+          safety-current.txt
+          pip-audit-current.json

@@ -1,0 +1,587 @@
+[
+  {
+    "timestamp": "2025-06-19 20:53:19.326023",
+    "event_type": "session_start",
+    "content": "Started session: voice_session_20250619_205319",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.326028",
+    "event_type": "speech",
+    "content": "Started recording session: voice_session_20250619_205319",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.327444",
+    "event_type": "speech",
+    "content": "\ud83c\udfa4 Scout CLI Voice-Enabled Test Suite Starting",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.327516",
+    "event_type": "speech",
+    "content": "\n\ud83d\udccb Testing Category: System Requirements",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.327548",
+    "event_type": "speech",
+    "content": "Starting test: Python Version Check. Verifying Python installation",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.327551",
+    "event_type": "test_start",
+    "content": "Python Version Check",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Verifying Python installation"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.348287",
+    "event_type": "speech",
+    "content": "Test Python Version Check passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.348324",
+    "event_type": "test_result",
+    "content": "Python Version Check",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.849473",
+    "event_type": "speech",
+    "content": "Starting test: Pip Version Check. Verifying package manager",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:19.849494",
+    "event_type": "test_start",
+    "content": "Pip Version Check",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Verifying package manager"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:20.721023",
+    "event_type": "speech",
+    "content": "Test Pip Version Check passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:20.721055",
+    "event_type": "test_result",
+    "content": "Pip Version Check",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.226231",
+    "event_type": "speech",
+    "content": "\n\ud83d\udccb Testing Category: Scout CLI Core",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.226262",
+    "event_type": "speech",
+    "content": "Starting test: Scout Package Import. Testing core package import",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.226266",
+    "event_type": "test_start",
+    "content": "Scout Package Import",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing core package import"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.277769",
+    "event_type": "speech",
+    "content": "Test Scout Package Import passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.277802",
+    "event_type": "test_result",
+    "content": "Scout Package Import",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.782937",
+    "event_type": "speech",
+    "content": "Starting test: CLI Help Command. Testing CLI interface",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:21.782953",
+    "event_type": "test_start",
+    "content": "CLI Help Command",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing CLI interface"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:22.961232",
+    "event_type": "speech",
+    "content": "Test CLI Help Command passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:22.961283",
+    "event_type": "test_result",
+    "content": "CLI Help Command",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:23.466465",
+    "event_type": "speech",
+    "content": "Starting test: Config Module. Testing configuration system",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:23.466514",
+    "event_type": "test_start",
+    "content": "Config Module",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing configuration system"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:23.530965",
+    "event_type": "speech",
+    "content": "Test Config Module passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:23.530990",
+    "event_type": "test_result",
+    "content": "Config Module",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.036263",
+    "event_type": "speech",
+    "content": "\n\ud83d\udccb Testing Category: Voice Assistant",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.036330",
+    "event_type": "speech",
+    "content": "Starting test: Voice Assistant Import. Testing voice assistant module",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.036339",
+    "event_type": "test_start",
+    "content": "Voice Assistant Import",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing voice assistant module"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.136988",
+    "event_type": "speech",
+    "content": "Test Voice Assistant Import passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.137017",
+    "event_type": "test_result",
+    "content": "Voice Assistant Import",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.642217",
+    "event_type": "speech",
+    "content": "Starting test: Text-to-Speech Engine. Testing speech synthesis",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.642261",
+    "event_type": "test_start",
+    "content": "Text-to-Speech Engine",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing speech synthesis"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.696547",
+    "event_type": "speech",
+    "content": "Test Text-to-Speech Engine failed. Exit code: 1 | Error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pyttsx3; print(",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:24.696587",
+    "event_type": "test_result",
+    "content": "Text-to-Speech Engine",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": false,
+      "details": "Exit code: 1 | Error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pyttsx3; print("
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:25.198918",
+    "event_type": "speech",
+    "content": "\n\ud83d\udccb Testing Category: Advanced Features",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:25.198960",
+    "event_type": "speech",
+    "content": "Starting test: AI Engine. Testing AI-powered analysis",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:25.198964",
+    "event_type": "test_start",
+    "content": "AI Engine",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing AI-powered analysis"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:25.678195",
+    "event_type": "speech",
+    "content": "Test AI Engine passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:25.678229",
+    "event_type": "test_result",
+    "content": "AI Engine",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.183391",
+    "event_type": "speech",
+    "content": "Starting test: Real-time Monitor. Testing live monitoring",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.183433",
+    "event_type": "test_start",
+    "content": "Real-time Monitor",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing live monitoring"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.287205",
+    "event_type": "speech",
+    "content": "Test Real-time Monitor failed. Exit code: 1 | Error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    from scout.realtime_mo",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.287247",
+    "event_type": "test_result",
+    "content": "Real-time Monitor",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": false,
+      "details": "Exit code: 1 | Error: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    from scout.realtime_mo"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.792439",
+    "event_type": "speech",
+    "content": "Starting test: Blockchain Security. Testing Web3 analysis",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.792480",
+    "event_type": "test_start",
+    "content": "Blockchain Security",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing Web3 analysis"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.976686",
+    "event_type": "speech",
+    "content": "Test Blockchain Security passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:26.976733",
+    "event_type": "test_result",
+    "content": "Blockchain Security",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:27.482008",
+    "event_type": "speech",
+    "content": "\n\ud83d\udccb Testing Category: Dependencies",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:27.482078",
+    "event_type": "speech",
+    "content": "Starting test: Click Framework. Testing CLI framework",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:27.482087",
+    "event_type": "test_start",
+    "content": "Click Framework",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing CLI framework"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:27.551230",
+    "event_type": "speech",
+    "content": "Test Click Framework passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:27.551255",
+    "event_type": "test_result",
+    "content": "Click Framework",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.056429",
+    "event_type": "speech",
+    "content": "Starting test: HTTP Client. Testing network capabilities",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.056471",
+    "event_type": "test_start",
+    "content": "HTTP Client",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing network capabilities"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.207539",
+    "event_type": "speech",
+    "content": "Test HTTP Client passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.207566",
+    "event_type": "test_result",
+    "content": "HTTP Client",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.712741",
+    "event_type": "speech",
+    "content": "Starting test: YAML Parser. Testing configuration parsing",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.712779",
+    "event_type": "test_start",
+    "content": "YAML Parser",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Testing configuration parsing"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.772116",
+    "event_type": "speech",
+    "content": "Test YAML Parser passed. Exit code: 0",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.772141",
+    "event_type": "test_result",
+    "content": "YAML Parser",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "Exit code: 0"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:53:28.931129",
+    "event_type": "speech_complete",
+    "content": "Started recording session: voice_session_20250619_205319",
+    "duration": 9.605005025863647,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:29.277402",
+    "event_type": "speech",
+    "content": "\n\ud83c\udfc1 Test Suite Complete!",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:29.280951",
+    "event_type": "speech",
+    "content": "\ud83d\udcca Results: 11/13 tests passed (84.6%)",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:29.281405",
+    "event_type": "speech",
+    "content": "\u2705 Good! Scout CLI is mostly working with some optional features missing",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:53:29.281466",
+    "event_type": "session_end",
+    "content": "Ended session: voice_session_20250619_205319",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  }
+]

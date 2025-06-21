@@ -1,0 +1,209 @@
+name: Label Management
+
+on:
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
+  workflow_dispatch:
+
+jobs:
+  auto-label:
+    name: Auto Label Issues and PRs
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Label based on title and content
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const issue = context.payload.issue || context.payload.pull_request;
+          const isIssue = !!context.payload.issue;
+          const isPR = !!context.payload.pull_request;
+
+          if (!issue) return;
+
+          const title = issue.title.toLowerCase();
+          const body = (issue.body || '').toLowerCase();
+          const labels = [];
+
+          // Security related
+          if (title.includes('security') || title.includes('vulnerability') || title.includes('cve') ||
+              body.includes('security') || body.includes('vulnerability')) {
+            labels.push('security');
+          }
+
+          // Bug reports
+          if (title.includes('bug') || title.includes('error') || title.includes('issue') ||
+              title.includes('fix') || body.includes('bug') || body.includes('error')) {
+            labels.push('bug');
+          }
+
+          // Feature requests
+          if (title.includes('feature') || title.includes('enhancement') || title.includes('add') ||
+              body.includes('feature request') || body.includes('enhancement')) {
+            labels.push('enhancement');
+          }
+
+          // Documentation
+          if (title.includes('doc') || title.includes('readme') || title.includes('documentation') ||
+              body.includes('documentation') || body.includes('docs')) {
+            labels.push('documentation');
+          }
+
+          // Dependencies
+          if (title.includes('dep') || title.includes('requirement') || title.includes('package') ||
+              body.includes('dependency') || body.includes('package')) {
+            labels.push('dependencies');
+          }
+
+          // CI/CD
+          if (title.includes('ci') || title.includes('cd') || title.includes('workflow') ||
+              title.includes('action') || body.includes('github actions') || body.includes('workflow')) {
+            labels.push('ci/cd');
+          }
+
+          // Performance
+          if (title.includes('performance') || title.includes('speed') || title.includes('slow') ||
+              body.includes('performance') || body.includes('optimization')) {
+            labels.push('performance');
+          }
+
+          // Testing
+          if (title.includes('test') || body.includes('testing') || body.includes('test')) {
+            labels.push('testing');
+          }
+
+          // Priority based on keywords
+          if (title.includes('critical') || title.includes('urgent') || body.includes('critical')) {
+            labels.push('priority: high');
+          } else if (title.includes('minor') || title.includes('trivial')) {
+            labels.push('priority: low');
+          } else {
+            labels.push('priority: medium');
+          }
+
+          // Difficulty estimation
+          if (title.includes('simple') || title.includes('easy') || body.includes('simple fix')) {
+            labels.push('difficulty: easy');
+          } else if (title.includes('complex') || title.includes('difficult') || body.includes('complex')) {
+            labels.push('difficulty: hard');
+          } else {
+            labels.push('difficulty: medium');
+          }
+
+          // PR specific labels
+          if (isPR) {
+            const files = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+
+            const changedFiles = files.data.map(f => f.filename);
+
+            if (changedFiles.some(f => f.includes('.github/workflows'))) {
+              labels.push('ci/cd');
+            }
+
+            if (changedFiles.some(f => f.includes('test'))) {
+              labels.push('testing');
+            }
+
+            if (changedFiles.some(f => f.includes('requirements.txt') || f.includes('setup.py') || f.includes('pyproject.toml'))) {
+              labels.push('dependencies');
+            }
+
+            if (changedFiles.some(f => f.includes('README') || f.includes('.md'))) {
+              labels.push('documentation');
+            }
+          }
+
+          // Add good first issue label for simple issues
+          if (isIssue && labels.includes('difficulty: easy') &&
+              (labels.includes('documentation') || labels.includes('testing'))) {
+            labels.push('good first issue');
+          }
+
+          // Apply labels
+          if (labels.length > 0) {
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              labels: labels
+            });
+          }
+
+  create-labels:
+    name: Create Repository Labels
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      issues: write
+
+    steps:
+    - name: Create standard labels
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const labels = [
+            // Type labels
+            { name: 'bug', color: 'd73a4a', description: 'Something isn\'t working' },
+            { name: 'enhancement', color: 'a2eeef', description: 'New feature or request' },
+            { name: 'documentation', color: '0075ca', description: 'Improvements or additions to documentation' },
+
+            // Area labels
+            { name: 'security', color: 'ff0000', description: 'Security related issues' },
+            { name: 'dependencies', color: '0366d6', description: 'Pull requests that update a dependency file' },
+            { name: 'ci/cd', color: 'f9d0c4', description: 'Continuous Integration and Deployment' },
+            { name: 'performance', color: 'fbca04', description: 'Performance improvements' },
+            { name: 'testing', color: '1d76db', description: 'Testing related' },
+
+            // Priority labels
+            { name: 'priority: high', color: 'b60205', description: 'High priority' },
+            { name: 'priority: medium', color: 'fbca04', description: 'Medium priority' },
+            { name: 'priority: low', color: '0e8a16', description: 'Low priority' },
+
+            // Difficulty labels
+            { name: 'difficulty: easy', color: '7057ff', description: 'Easy to implement' },
+            { name: 'difficulty: medium', color: '663399', description: 'Medium difficulty' },
+            { name: 'difficulty: hard', color: '5319e7', description: 'Hard to implement' },
+
+            // Status labels
+            { name: 'good first issue', color: '7057ff', description: 'Good for newcomers' },
+            { name: 'help wanted', color: '008672', description: 'Extra attention is needed' },
+            { name: 'invalid', color: 'e4e669', description: 'This doesn\'t seem right' },
+            { name: 'wontfix', color: 'ffffff', description: 'This will not be worked on' },
+            { name: 'duplicate', color: 'cfd3d7', description: 'This issue or pull request already exists' },
+
+            // Automated labels
+            { name: 'automated', color: 'ededed', description: 'Created automatically' },
+            { name: 'vulnerability', color: 'ff0000', description: 'Security vulnerability' },
+            { name: 'compliance', color: '0052cc', description: 'Compliance related' },
+          ];
+
+          for (const label of labels) {
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: label.name,
+                color: label.color,
+                description: label.description
+              });
+              console.log(`Created label: ${label.name}`);
+            } catch (error) {
+              if (error.status === 422) {
+                console.log(`Label already exists: ${label.name}`);
+              } else {
+                console.error(`Error creating label ${label.name}:`, error);
+              }
+            }
+          }

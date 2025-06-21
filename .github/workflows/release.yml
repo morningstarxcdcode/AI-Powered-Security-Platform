@@ -1,0 +1,300 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+        type: string
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  validate-release:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      is_prerelease: ${{ steps.version.outputs.is_prerelease }}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Determine version
+      id: version
+      run: |
+        if [ "${{ github.event_name }}" = "push" ]; then
+          VERSION=${GITHUB_REF#refs/tags/v}
+        else
+          VERSION="${{ github.event.inputs.version }}"
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+        if [[ $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "is_prerelease=false" >> $GITHUB_OUTPUT
+        else
+          echo "is_prerelease=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Validate version format
+      run: |
+        VERSION="${{ steps.version.outputs.version }}"
+        if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta|rc)[0-9]+)?$ ]]; then
+          echo "Invalid version format: $VERSION"
+          exit 1
+        fi
+
+  build-and-test:
+    name: Build and Test Release
+    runs-on: ${{ matrix.os }}
+    needs: validate-release
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build wheel twine
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Update version in setup.py
+      run: |
+        VERSION="${{ needs.validate-release.outputs.version }}"
+        sed -i 's/version="[^"]*"/version="'$VERSION'"/' setup.py
+      shell: bash
+
+    - name: Build package
+      run: python -m build
+
+    - name: Test installation
+      run: |
+        pip install dist/*.whl
+        scout --version || scout --help
+
+    - name: Run basic functionality test
+      run: |
+        scout vuln-info --severity critical || true
+        scout compliance-info --framework nist || true
+
+  security-audit:
+    name: Security Audit for Release
+    runs-on: ubuntu-latest
+    needs: validate-release
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety bandit semgrep
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run safety check
+      run: safety check --json --output safety-report.json || true
+
+    - name: Run bandit security scan
+      run: bandit -r scout/ -f json -o bandit-report.json || true
+
+    - name: Run semgrep scan
+      run: |
+        semgrep --config=auto scout/ --json --output=semgrep-report.json || true
+
+    - name: Upload security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-audit-reports
+        path: |
+          safety-report.json
+          bandit-report.json
+          semgrep-report.json
+
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [validate-release, build-and-test, security-audit]
+    if: success()
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build wheel twine
+
+    - name: Update version in setup.py
+      run: |
+        VERSION="${{ needs.validate-release.outputs.version }}"
+        sed -i 's/version="[^"]*"/version="'$VERSION'"/' setup.py
+
+    - name: Build final package
+      run: python -m build
+
+    - name: Generate changelog
+      id: changelog
+      run: |
+        VERSION="${{ needs.validate-release.outputs.version }}"
+        echo "## What's New in v$VERSION" > CHANGELOG.md
+        echo "" >> CHANGELOG.md
+
+        if [ -f CHANGELOG.md ]; then
+          echo "### Changes" >> CHANGELOG.md
+          git log --oneline --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD~1)..HEAD >> CHANGELOG.md || true
+        else
+          echo "- Initial release of Scout CLI" >> CHANGELOG.md
+          echo "- Advanced security reconnaissance capabilities" >> CHANGELOG.md
+          echo "- Comprehensive vulnerability assessment" >> CHANGELOG.md
+          echo "- Compliance checking and reporting" >> CHANGELOG.md
+        fi
+
+        echo "" >> CHANGELOG.md
+        echo "### Security" >> CHANGELOG.md
+        echo "- All dependencies scanned for vulnerabilities" >> CHANGELOG.md
+        echo "- Code security audit performed" >> CHANGELOG.md
+        echo "" >> CHANGELOG.md
+        echo "### Installation" >> CHANGELOG.md
+        echo '```bash' >> CHANGELOG.md
+        echo "pip install scout-cli==$VERSION" >> CHANGELOG.md
+        echo '```' >> CHANGELOG.md
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ needs.validate-release.outputs.version }}
+        name: Scout CLI v${{ needs.validate-release.outputs.version }}
+        body_path: CHANGELOG.md
+        prerelease: ${{ needs.validate-release.outputs.is_prerelease }}
+        files: |
+          dist/*
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: [validate-release, create-release]
+    if: success() && needs.validate-release.outputs.is_prerelease == 'false'
+    environment: pypi
+    permissions:
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install build dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install build wheel twine
+
+    - name: Update version in setup.py
+      run: |
+        VERSION="${{ needs.validate-release.outputs.version }}"
+        sed -i 's/version="[^"]*"/version="'$VERSION'"/' setup.py
+
+    - name: Build package
+      run: python -m build
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
+        skip_existing: true
+
+  build-docker:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    needs: [validate-release, create-release]
+    if: success()
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: scout-cli
+        tags: |
+          type=ref,event=tag
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  notify-release:
+    name: Notify Release
+    runs-on: ubuntu-latest
+    needs: [validate-release, create-release, publish-pypi, build-docker]
+    if: always()
+
+    steps:
+    - name: Notify success
+      if: needs.create-release.result == 'success'
+      run: |
+        echo "✅ Scout CLI v${{ needs.validate-release.outputs.version }} released successfully!"
+        echo "📦 Package: https://pypi.org/project/scout-cli/"
+        echo "🐳 Docker: https://hub.docker.com/r/scout-cli"
+        echo "📋 Release: https://github.com/${{ github.repository }}/releases/tag/v${{ needs.validate-release.outputs.version }}"
+
+    - name: Notify failure
+      if: needs.create-release.result == 'failure'
+      run: |
+        echo "❌ Release failed for Scout CLI v${{ needs.validate-release.outputs.version }}"
+        exit 1

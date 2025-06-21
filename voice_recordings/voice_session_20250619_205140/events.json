@@ -1,0 +1,1900 @@
+[
+  {
+    "timestamp": "2025-06-19 20:51:40.349234",
+    "event_type": "session_start",
+    "content": "Started session: voice_session_20250619_205140",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:40.349252",
+    "event_type": "speech",
+    "content": "Started recording session: voice_session_20250619_205140",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:40.349468",
+    "event_type": "speech",
+    "content": "Welcome to Scout CLI Voice-Enabled Security Testing Platform",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:40.349476",
+    "event_type": "speech",
+    "content": "This demonstration showcases advanced voice-controlled security operations",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:42.355030",
+    "event_type": "speech",
+    "content": "Section 1: Core Voice Features",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:42.355475",
+    "event_type": "speech",
+    "content": "Step 1: Demonstrating crystal clear speech synthesis",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:42.359166",
+    "event_type": "speech",
+    "content": "This demonstrates crystal clear speech synthesis with optimal clarity and pronunciation",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:44.019226",
+    "event_type": "speech",
+    "content": "Step 2: Testing pause and resume functionality",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:44.080394",
+    "event_type": "speech",
+    "content": "This message will pause",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:44.080447",
+    "event_type": "speech",
+    "content": "Speech paused",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:44.080469",
+    "event_type": "control",
+    "content": "Speech paused",
+    "duration": null,
+    "user_command": "pause",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:46.085724",
+    "event_type": "speech",
+    "content": "Resuming speech",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:46.085824",
+    "event_type": "control",
+    "content": "Speech resumed",
+    "duration": null,
+    "user_command": "resume",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:46.087820",
+    "event_type": "speech",
+    "content": "And now we have resumed speaking",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.591055",
+    "event_type": "speech",
+    "content": "Step 3: Showing variable speech rate control",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.593598",
+    "event_type": "speech",
+    "content": "Normal speaking rate",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.594871",
+    "event_type": "speech",
+    "content": "Speech rate increased to 185 words per minute",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.594901",
+    "event_type": "control",
+    "content": "Speed increased to 185",
+    "duration": null,
+    "user_command": "speed_up",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.594910",
+    "event_type": "speech",
+    "content": "Faster speaking rate for urgent announcements",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.594958",
+    "event_type": "speech",
+    "content": "Speech rate decreased to 160 words per minute",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.595226",
+    "event_type": "control",
+    "content": "Speed decreased to 160",
+    "duration": null,
+    "user_command": "slow_down",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.595240",
+    "event_type": "speech",
+    "content": "Speech rate decreased to 135 words per minute",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.595273",
+    "event_type": "control",
+    "content": "Speed decreased to 135",
+    "duration": null,
+    "user_command": "slow_down",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.595276",
+    "event_type": "speech",
+    "content": "Slower speaking rate for detailed explanations",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:47.817143",
+    "event_type": "speech_complete",
+    "content": "Resuming speech",
+    "duration": 1.729992389678955,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.096326",
+    "event_type": "speech",
+    "content": "Step 4: Demonstrating volume adjustment",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098829",
+    "event_type": "speech",
+    "content": "Volume decreased to 80%",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098948",
+    "event_type": "control",
+    "content": "Volume decreased to 0.8",
+    "duration": null,
+    "user_command": "volume_down",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098953",
+    "event_type": "speech",
+    "content": "Lower volume for quiet environments",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098958",
+    "event_type": "speech",
+    "content": "Volume increased to 90%",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098960",
+    "event_type": "control",
+    "content": "Volume increased to 0.9",
+    "duration": null,
+    "user_command": "volume_up",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098965",
+    "event_type": "speech",
+    "content": "Volume increased to 100%",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098967",
+    "event_type": "control",
+    "content": "Volume increased to 1.0",
+    "duration": null,
+    "user_command": "volume_up",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:49.098968",
+    "event_type": "speech",
+    "content": "Higher volume for noisy environments",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:50.604205",
+    "event_type": "speech",
+    "content": "Step 5: Testing repeat last message feature",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:50.604337",
+    "event_type": "speech",
+    "content": "This message can be repeated on command",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:51.070922",
+    "event_type": "speech_complete",
+    "content": "Started recording session: voice_session_20250619_205140",
+    "duration": 10.72152590751648,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:51.609432",
+    "event_type": "speech",
+    "content": "Repeating: This message can be repeated on command",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:51.610224",
+    "event_type": "control",
+    "content": "Repeated last speech",
+    "duration": null,
+    "user_command": "repeat",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:52.451215",
+    "event_type": "speech_complete",
+    "content": "Volume increased to 100%",
+    "duration": 3.128633975982666,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:53.111773",
+    "event_type": "speech",
+    "content": "Section 1 completed",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:53.868243",
+    "event_type": "speech_complete",
+    "content": "Speech rate decreased to 135 words per minute",
+    "duration": 4.771523952484131,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.116987",
+    "event_type": "speech",
+    "content": "Section 2: Security Scanning with Voice",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117122",
+    "event_type": "speech",
+    "content": "Step 1: Voice-guided security scanning process",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117148",
+    "event_type": "speech",
+    "content": "Starting test: Security Scan. Comprehensive vulnerability assessment",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117153",
+    "event_type": "test_start",
+    "content": "Security Scan",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "description": "Comprehensive vulnerability assessment"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117164",
+    "event_type": "speech",
+    "content": "Scan progress: 20%. Currently scanning: Port scanning",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117170",
+    "event_type": "scan_progress",
+    "content": "Scan progress: 20%. Currently scanning: Port scanning",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "progress": 1,
+      "total": 5,
+      "item": "Port scanning"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117174",
+    "event_type": "speech",
+    "content": "Scan progress: 60%. Currently scanning: Vulnerability detection",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117176",
+    "event_type": "scan_progress",
+    "content": "Scan progress: 60%. Currently scanning: Vulnerability detection",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "progress": 3,
+      "total": 5,
+      "item": "Vulnerability detection"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117177",
+    "event_type": "speech",
+    "content": "Scan progress: 100%. Currently scanning: Report generation",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117179",
+    "event_type": "scan_progress",
+    "content": "Scan progress: 100%. Currently scanning: Report generation",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "progress": 5,
+      "total": 5,
+      "item": "Report generation"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117188",
+    "event_type": "speech",
+    "content": "Test Security Scan passed. 3 vulnerabilities found",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.117192",
+    "event_type": "test_result",
+    "content": "Security Scan",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "passed": true,
+      "details": "3 vulnerabilities found"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.444291",
+    "event_type": "speech_complete",
+    "content": "Volume increased to 90%",
+    "duration": 2.868596076965332,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:55.607823",
+    "event_type": "speech_complete",
+    "content": "Repeating: This message can be repeated on command",
+    "duration": 3.9979310035705566,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.619386",
+    "event_type": "speech",
+    "content": "Step 2: Real-time vulnerability announcements",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.620534",
+    "event_type": "speech",
+    "content": "Critical vulnerability found: SQL Injection in login form",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.620586",
+    "event_type": "vulnerability",
+    "content": "SQL Injection",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "severity": "Critical",
+      "target": "login form"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.620594",
+    "event_type": "speech",
+    "content": "High vulnerability found: Cross-Site Scripting in search parameter",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.620596",
+    "event_type": "vulnerability",
+    "content": "Cross-Site Scripting",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "severity": "High",
+      "target": "search parameter"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.620598",
+    "event_type": "speech",
+    "content": "Medium vulnerability found: Weak Encryption in data transmission",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.620600",
+    "event_type": "vulnerability",
+    "content": "Weak Encryption",
+    "duration": null,
+    "user_command": null,
+    "context": {
+      "severity": "Medium",
+      "target": "data transmission"
+    }
+  },
+  {
+    "timestamp": "2025-06-19 20:51:56.653636",
+    "event_type": "speech_complete",
+    "content": "Volume decreased to 80%",
+    "duration": 2.6979799270629883,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:58.130124",
+    "event_type": "speech",
+    "content": "Step 3: Continuous progress narration",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:58.130248",
+    "event_type": "speech",
+    "content": "Demonstrating Continuous progress narration",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:58.891996",
+    "event_type": "speech_complete",
+    "content": "Section 2: Security Scanning with Voice",
+    "duration": 3.5183849334716797,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:59.635394",
+    "event_type": "speech",
+    "content": "Step 4: Executive summary generation",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:51:59.637169",
+    "event_type": "speech",
+    "content": "Demonstrating Executive summary generation",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:01.093139",
+    "event_type": "speech_complete",
+    "content": "Speech rate decreased to 160 words per minute",
+    "duration": 4.473527908325195,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:01.141937",
+    "event_type": "speech",
+    "content": "Section 2 completed",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:01.769979",
+    "event_type": "speech_complete",
+    "content": "High vulnerability found: Cross-Site Scripting in search parameter",
+    "duration": 4.661375045776367,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:02.032961",
+    "event_type": "speech_complete",
+    "content": "Medium vulnerability found: Weak Encryption in data transmission",
+    "duration": 5.085322141647339,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:02.050290",
+    "event_type": "speech_complete",
+    "content": "Speech paused",
+    "duration": 1.6525070667266846,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.132593",
+    "event_type": "speech_complete",
+    "content": "Critical vulnerability found: SQL Injection in login form",
+    "duration": 4.973733901977539,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.147291",
+    "event_type": "speech",
+    "content": "Section 3: AI-Powered Analysis Voice Integration",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.148524",
+    "event_type": "speech",
+    "content": "Step 1: AI-powered security analysis with voice feedback",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.148692",
+    "event_type": "speech",
+    "content": "Initiating AI-powered security analysis using advanced machine learning models",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.148714",
+    "event_type": "speech",
+    "content": "Processing security patterns and threat indicators",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.148718",
+    "event_type": "speech",
+    "content": "AI confidence level: 94.2 percent. Risk score: 8.5 out of 10",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:03.148720",
+    "event_type": "speech",
+    "content": "AI has identified 7 potential attack vectors and generated 5 remediation strategies",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:04.037091",
+    "event_type": "speech_complete",
+    "content": "Section 1: Core Voice Features",
+    "duration": 2.8947129249572754,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:04.442718",
+    "event_type": "speech_complete",
+    "content": "Speech rate increased to 185 words per minute",
+    "duration": 4.807081937789917,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:04.653885",
+    "event_type": "speech",
+    "content": "Step 2: Voice-announced threat predictions",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:04.653999",
+    "event_type": "speech",
+    "content": "Demonstrating Voice-announced threat predictions",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:06.155448",
+    "event_type": "speech",
+    "content": "Step 3: AI-generated executive briefings",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:06.155527",
+    "event_type": "speech",
+    "content": "Demonstrating AI-generated executive briefings",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:07.289344",
+    "event_type": "speech_complete",
+    "content": "Welcome to Scout CLI Voice-Enabled Security Testing Platform",
+    "duration": 4.690446138381958,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:07.404925",
+    "event_type": "speech_complete",
+    "content": "Section 3: AI-Powered Analysis Voice Integration",
+    "duration": 4.257437229156494,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:07.601956",
+    "event_type": "speech_complete",
+    "content": "This message will pause",
+    "duration": 2.0590598583221436,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:07.656622",
+    "event_type": "speech",
+    "content": "Step 4: Spoken security recommendations",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:07.658483",
+    "event_type": "speech",
+    "content": "Demonstrating Spoken security recommendations",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:08.214789",
+    "event_type": "speech_complete",
+    "content": "Step 1: Demonstrating crystal clear speech synthesis",
+    "duration": 4.676608085632324,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:08.660939",
+    "event_type": "speech_complete",
+    "content": "Step 2: Testing pause and resume functionality",
+    "duration": 4.02271294593811,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:08.679487",
+    "event_type": "speech_complete",
+    "content": "And now we have resumed speaking",
+    "duration": 2.731912851333618,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:08.984945",
+    "event_type": "speech_complete",
+    "content": "This demonstration showcases advanced voice-controlled security operations",
+    "duration": 5.709618806838989,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:09.159501",
+    "event_type": "speech",
+    "content": "Section 3 completed",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:09.870497",
+    "event_type": "speech_complete",
+    "content": "This demonstrates crystal clear speech synthesis with optimal clarity and pronunciation",
+    "duration": 6.314847946166992,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:10.849012",
+    "event_type": "speech_complete",
+    "content": "Normal speaking rate",
+    "duration": 2.0566370487213135,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:11.164485",
+    "event_type": "speech",
+    "content": "Section 4: Real-Time Operations Voice Control",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:11.165556",
+    "event_type": "speech",
+    "content": "Step 1: Voice-controlled real-time monitoring",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:11.165661",
+    "event_type": "speech",
+    "content": "Real-time security monitoring dashboard is now active",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:11.165664",
+    "event_type": "speech",
+    "content": "Monitoring 247 endpoints across 12 networks",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:11.165665",
+    "event_type": "speech",
+    "content": "Current threat level: Medium. 3 active alerts requiring attention",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:11.456395",
+    "event_type": "speech_complete",
+    "content": "Step 3: Showing variable speech rate control",
+    "duration": 3.7994611263275146,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:12.628900",
+    "event_type": "speech_complete",
+    "content": "Faster speaking rate for urgent announcements",
+    "duration": 3.7186686992645264,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:12.670759",
+    "event_type": "speech",
+    "content": "Step 2: Immediate security event notifications",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:12.671913",
+    "event_type": "speech",
+    "content": "Demonstrating Immediate security event notifications",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:12.836892",
+    "event_type": "speech_complete",
+    "content": "Slower speaking rate for detailed explanations",
+    "duration": 3.7312440872192383,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:13.514082",
+    "event_type": "speech_complete",
+    "content": "Step 4: Demonstrating volume adjustment",
+    "duration": 3.7987897396087646,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:13.778151",
+    "event_type": "speech_complete",
+    "content": "Lower volume for quiet environments",
+    "duration": 3.612351894378662,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:13.812808",
+    "event_type": "speech_complete",
+    "content": "Higher volume for noisy environments",
+    "duration": 3.632098913192749,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:14.177122",
+    "event_type": "speech",
+    "content": "Step 3: Live dashboard metric reporting",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:14.177267",
+    "event_type": "speech",
+    "content": "Demonstrating Live dashboard metric reporting",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:14.334404",
+    "event_type": "speech_complete",
+    "content": "Section 1 completed",
+    "duration": 1.983625888824463,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:14.673998",
+    "event_type": "speech_complete",
+    "content": "This message can be repeated on command",
+    "duration": 3.298133134841919,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:14.730883",
+    "event_type": "speech_complete",
+    "content": "Step 5: Testing repeat last message feature",
+    "duration": 4.240108966827393,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:15.181600",
+    "event_type": "speech_complete",
+    "content": "Section 4: Real-Time Operations Voice Control",
+    "duration": 4.016935348510742,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:15.682427",
+    "event_type": "speech",
+    "content": "Step 4: Voice-managed alert prioritization",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:15.682509",
+    "event_type": "speech",
+    "content": "Demonstrating Voice-managed alert prioritization",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:16.967882",
+    "event_type": "speech_complete",
+    "content": "Step 1: Voice-guided security scanning process",
+    "duration": 4.296953201293945,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:17.187012",
+    "event_type": "speech",
+    "content": "Section 4 completed",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:18.874651",
+    "event_type": "speech_complete",
+    "content": "Starting test: Security Scan. Comprehensive vulnerability assessment",
+    "duration": 5.912970066070557,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.193349",
+    "event_type": "speech",
+    "content": "Section 5: Blockchain Security Voice Features",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.196258",
+    "event_type": "speech",
+    "content": "Step 1: Voice-guided smart contract auditing",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.196403",
+    "event_type": "speech",
+    "content": "Analyzing smart contract bytecode for security vulnerabilities",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.196408",
+    "event_type": "speech",
+    "content": "Detected potential reentrancy vulnerability in transfer function",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.196411",
+    "event_type": "speech",
+    "content": "DeFi protocol risk score: 6.8 out of 10",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.234884",
+    "event_type": "speech_complete",
+    "content": "Scan progress: 20%. Currently scanning: Port scanning",
+    "duration": 5.100167989730835,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.280850",
+    "event_type": "speech_complete",
+    "content": "Section 2 completed",
+    "duration": 2.0935652256011963,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.281540",
+    "event_type": "speech_complete",
+    "content": "Step 3: Continuous progress narration",
+    "duration": 3.445604085922241,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.408835",
+    "event_type": "speech_complete",
+    "content": "Step 2: Real-time vulnerability announcements",
+    "duration": 4.094701051712036,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.571505",
+    "event_type": "speech_complete",
+    "content": "Test Security Scan passed. 3 vulnerabilities found",
+    "duration": 4.2906670570373535,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.755006",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Continuous progress narration",
+    "duration": 3.5769870281219482,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:19.839731",
+    "event_type": "speech_complete",
+    "content": "Step 4: Executive summary generation",
+    "duration": 3.603455066680908,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:20.299840",
+    "event_type": "speech_complete",
+    "content": "Scan progress: 60%. Currently scanning: Vulnerability detection",
+    "duration": 5.957836151123047,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:20.398963",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Executive summary generation",
+    "duration": 3.7139337062835693,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:20.698921",
+    "event_type": "speech",
+    "content": "Step 2: Spoken DeFi protocol risk analysis",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:20.700577",
+    "event_type": "speech",
+    "content": "Demonstrating Spoken DeFi protocol risk analysis",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:20.955038",
+    "event_type": "speech_complete",
+    "content": "Scan progress: 100%. Currently scanning: Report generation",
+    "duration": 5.935410976409912,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:22.204313",
+    "event_type": "speech",
+    "content": "Step 3: Real-time Web3 threat announcements",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:22.204532",
+    "event_type": "speech",
+    "content": "Demonstrating Real-time Web3 threat announcements",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:23.222760",
+    "event_type": "speech_complete",
+    "content": "Section 5: Blockchain Security Voice Features",
+    "duration": 4.02898383140564,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:23.347371",
+    "event_type": "speech_complete",
+    "content": "Step 1: AI-powered security analysis with voice feedback",
+    "duration": 4.873871088027954,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:23.705499",
+    "event_type": "speech",
+    "content": "Step 4: Comprehensive crypto security briefings",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:23.707791",
+    "event_type": "speech",
+    "content": "Demonstrating Comprehensive crypto security briefings",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:24.982402",
+    "event_type": "speech_complete",
+    "content": "Section 3 completed",
+    "duration": 3.043883800506592,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:25.210912",
+    "event_type": "speech",
+    "content": "Section 5 completed",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:25.354022",
+    "event_type": "speech_complete",
+    "content": "Step 2: Voice-announced threat predictions",
+    "duration": 4.565769910812378,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:25.457638",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Voice-announced threat predictions",
+    "duration": 4.546648263931274,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:25.481657",
+    "event_type": "speech_complete",
+    "content": "Processing security patterns and threat indicators",
+    "duration": 4.782470941543579,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:26.063497",
+    "event_type": "speech_complete",
+    "content": "Step 3: AI-generated executive briefings",
+    "duration": 4.986600875854492,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:26.149603",
+    "event_type": "speech_complete",
+    "content": "Step 4: Spoken security recommendations",
+    "duration": 4.804149627685547,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:26.292099",
+    "event_type": "speech_complete",
+    "content": "Demonstrating AI-generated executive briefings",
+    "duration": 5.03075098991394,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:26.364612",
+    "event_type": "speech_complete",
+    "content": "Initiating AI-powered security analysis using advanced machine learning models",
+    "duration": 5.984300136566162,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:26.666487",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Spoken security recommendations",
+    "duration": 4.857213020324707,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:26.827992",
+    "event_type": "speech_complete",
+    "content": "Step 1: Voice-controlled real-time monitoring",
+    "duration": 4.369232892990112,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:27.217108",
+    "event_type": "speech",
+    "content": "Section 6: Interactive Voice Commands",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:27.217190",
+    "event_type": "speech",
+    "content": "Step 1: Speech recognition and command processing",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:27.217203",
+    "event_type": "speech",
+    "content": "Say 'help' to test voice recognition",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:27.217226",
+    "event_type": "speech",
+    "content": "Voice recognition system is active and ready",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:27.814349",
+    "event_type": "speech_complete",
+    "content": "Real-time security monitoring dashboard is now active",
+    "duration": 4.1084818840026855,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:28.279512",
+    "event_type": "speech_complete",
+    "content": "AI has identified 7 potential attack vectors and generated 5 remediation strategies",
+    "duration": 7.4930009841918945,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:28.709544",
+    "event_type": "speech_complete",
+    "content": "AI confidence level: 94.2 percent. Risk score: 8.5 out of 10",
+    "duration": 7.969273805618286,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:28.722308",
+    "event_type": "speech",
+    "content": "Step 2: Voice command confirmation system",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:28.723403",
+    "event_type": "speech",
+    "content": "Demonstrating Voice command confirmation system",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:29.478758",
+    "event_type": "speech_complete",
+    "content": "Step 2: Immediate security event notifications",
+    "duration": 4.267497301101685,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:29.709936",
+    "event_type": "speech_complete",
+    "content": "Monitoring 247 endpoints across 12 networks",
+    "duration": 4.978753089904785,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:29.809524",
+    "event_type": "speech_complete",
+    "content": "Current threat level: Medium. 3 active alerts requiring attention",
+    "duration": 4.956815958023071,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:29.996530",
+    "event_type": "speech_complete",
+    "content": "Section 4 completed",
+    "duration": 2.1990551948547363,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:30.223721",
+    "event_type": "speech",
+    "content": "Step 3: Interactive voice help and guidance",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:30.223876",
+    "event_type": "speech",
+    "content": "Demonstrating Interactive voice help and guidance",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:30.417505",
+    "event_type": "speech_complete",
+    "content": "Step 3: Live dashboard metric reporting",
+    "duration": 3.559203863143921,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:30.587943",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Live dashboard metric reporting",
+    "duration": 3.62508487701416,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:30.877914",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Immediate security event notifications",
+    "duration": 4.390094041824341,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:30.999355",
+    "event_type": "speech_complete",
+    "content": "Step 4: Voice-managed alert prioritization",
+    "duration": 4.017049074172974,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:31.111369",
+    "event_type": "speech_complete",
+    "content": "Section 6: Interactive Voice Commands",
+    "duration": 3.544126272201538,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:31.786485",
+    "event_type": "speech",
+    "content": "Step 4: Voice-controlled session recording",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:31.794485",
+    "event_type": "speech",
+    "content": "Demonstrating Voice-controlled session recording",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:32.055681",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Voice-managed alert prioritization",
+    "duration": 4.40536093711853,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:32.095403",
+    "event_type": "speech_complete",
+    "content": "Step 1: Voice-guided smart contract auditing",
+    "duration": 4.230470180511475,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:33.211262",
+    "event_type": "speech_complete",
+    "content": "Detected potential reentrancy vulnerability in transfer function",
+    "duration": 4.8779871463775635,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:33.324091",
+    "event_type": "speech",
+    "content": "Section 6 completed",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:33.334744",
+    "event_type": "speech_complete",
+    "content": "Analyzing smart contract bytecode for security vulnerabilities",
+    "duration": 5.162779808044434,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:33.411865",
+    "event_type": "speech_complete",
+    "content": "DeFi protocol risk score: 6.8 out of 10",
+    "duration": 4.689389705657959,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:33.424644",
+    "event_type": "speech_complete",
+    "content": "Step 2: Spoken DeFi protocol risk analysis",
+    "duration": 4.104841947555542,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:33.980317",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Spoken DeFi protocol risk analysis",
+    "duration": 4.195440292358398,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:34.230424",
+    "event_type": "speech_complete",
+    "content": "Step 3: Real-time Web3 threat announcements",
+    "duration": 4.016859769821167,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:34.982125",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Real-time Web3 threat announcements",
+    "duration": 4.002074956893921,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:35.064965",
+    "event_type": "speech_complete",
+    "content": "Section 5 completed",
+    "duration": 3.5664141178131104,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:35.366788",
+    "event_type": "speech",
+    "content": "Now demonstrating interactive voice commands",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:35.368834",
+    "event_type": "speech",
+    "content": "Available commands include: pause, resume, repeat, stop, speed up, slow down, help",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:35.369181",
+    "event_type": "speech",
+    "content": "Voice commands demonstration starting",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:35.369196",
+    "event_type": "speech",
+    "content": "Command: help. Function: Getting voice command help",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:35.369415",
+    "event_type": "speech",
+    "content": "\n        Scout CLI Voice Assistant Commands:\n        Say 'pause' to pause speech.\n        Say 'resume' to resume speech.\n        Say 'repeat' to repeat last message.\n        Say 'stop' to stop all speech.\n        Say 'skip' to skip current message.\n        Say 'speed up' or 'slow down' to adjust rate.\n        Say 'volume up' or 'volume down' to adjust volume.\n        Say 'start recording' to begin session recording.\n        Say 'stop recording' to end session recording.\n        Say 'help' for this message.\n        ",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:36.371797",
+    "event_type": "speech",
+    "content": "Command: pause. Function: Pausing speech output",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:36.371871",
+    "event_type": "speech",
+    "content": "Speech paused",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:36.371878",
+    "event_type": "control",
+    "content": "Speech paused",
+    "duration": null,
+    "user_command": "pause",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:36.617413",
+    "event_type": "speech_complete",
+    "content": "Step 4: Comprehensive crypto security briefings",
+    "duration": 5.404303073883057,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:36.757059",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Comprehensive crypto security briefings",
+    "duration": 5.442980051040649,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:36.929790",
+    "event_type": "speech_complete",
+    "content": "Say 'help' to test voice recognition",
+    "duration": 4.5344648361206055,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:37.374631",
+    "event_type": "speech",
+    "content": "Resuming speech",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:37.375259",
+    "event_type": "control",
+    "content": "Speech resumed",
+    "duration": null,
+    "user_command": "resume",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:37.497115",
+    "event_type": "speech_complete",
+    "content": "Section 6 completed",
+    "duration": 2.6575372219085693,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:37.570169",
+    "event_type": "speech_complete",
+    "content": "Voice recognition system is active and ready",
+    "duration": 5.101161003112793,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:37.660186",
+    "event_type": "speech_complete",
+    "content": "Step 2: Voice command confirmation system",
+    "duration": 4.991525888442993,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:37.682989",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Voice command confirmation system",
+    "duration": 5.004202127456665,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:38.180877",
+    "event_type": "speech_complete",
+    "content": "Step 4: Voice-controlled session recording",
+    "duration": 4.579340934753418,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:38.190728",
+    "event_type": "speech_complete",
+    "content": "Step 3: Interactive voice help and guidance",
+    "duration": 4.8546082973480225,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:38.216800",
+    "event_type": "speech_complete",
+    "content": "Step 1: Speech recognition and command processing",
+    "duration": 6.271704196929932,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:38.384879",
+    "event_type": "speech",
+    "content": "Command: resume. Function: Resuming speech output",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:38.645654",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Interactive voice help and guidance",
+    "duration": 5.084212064743042,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:38.795817",
+    "event_type": "speech_complete",
+    "content": "Demonstrating Voice-controlled session recording",
+    "duration": 4.082015037536621,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.100703",
+    "event_type": "speech_complete",
+    "content": "Speech paused",
+    "duration": 1.7213950157165527,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.298345",
+    "event_type": "speech_complete",
+    "content": "Resuming speech",
+    "duration": 1.923246145248413,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.391093",
+    "event_type": "speech",
+    "content": "Command: repeat. Function: Repeating last message",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.392458",
+    "event_type": "speech",
+    "content": "This message will be repeated",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.392554",
+    "event_type": "speech",
+    "content": "Repeating: This message will be repeated",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.392558",
+    "event_type": "control",
+    "content": "Repeated last speech",
+    "duration": null,
+    "user_command": "repeat",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:39.506229",
+    "event_type": "speech_complete",
+    "content": "Now demonstrating interactive voice commands",
+    "duration": 4.139134883880615,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:40.395243",
+    "event_type": "speech",
+    "content": "Command: speed up. Function: Increasing speech rate",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:40.395334",
+    "event_type": "speech",
+    "content": "Speech rate increased to 185 words per minute",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:40.395339",
+    "event_type": "control",
+    "content": "Speed increased to 185",
+    "duration": null,
+    "user_command": "speed_up",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:40.395344",
+    "event_type": "speech",
+    "content": "Speed increased successfully",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:41.307061",
+    "event_type": "speech_complete",
+    "content": "Voice commands demonstration starting",
+    "duration": 2.9219508171081543,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:41.400405",
+    "event_type": "speech",
+    "content": "Command: slow down. Function: Decreasing speech rate",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:41.401449",
+    "event_type": "speech",
+    "content": "Speech rate decreased to 160 words per minute",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:41.401494",
+    "event_type": "control",
+    "content": "Speed decreased to 160",
+    "duration": null,
+    "user_command": "slow_down",
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:41.401497",
+    "event_type": "speech",
+    "content": "Speed decreased successfully",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:42.322099",
+    "event_type": "speech_complete",
+    "content": "This message will be repeated",
+    "duration": 2.626023054122925,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:42.406702",
+    "event_type": "speech",
+    "content": "Scout CLI Voice-Enabled Demo completed successfully",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:42.409748",
+    "event_type": "speech",
+    "content": "All voice features are fully operational and ready for production use",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:42.410078",
+    "event_type": "speech",
+    "content": "Voice recording session will now be saved with complete session analytics",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  },
+  {
+    "timestamp": "2025-06-19 20:52:42.410257",
+    "event_type": "session_end",
+    "content": "Ended session: voice_session_20250619_205140",
+    "duration": null,
+    "user_command": null,
+    "context": {}
+  }
+]

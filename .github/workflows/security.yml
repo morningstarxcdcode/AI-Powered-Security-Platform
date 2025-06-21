@@ -1,0 +1,325 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  secret-scan:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Run TruffleHog OSS
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+        extra_args: --debug --only-verified
+
+    - name: Run GitLeaks
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+      with:
+        report_format: 'sarif'
+        output_path: 'gitleaks-report.sarif'
+        fail: false
+
+    - name: Upload GitLeaks SARIF
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'gitleaks-report.sarif'
+        category: 'gitleaks'
+
+  dependency-scan:
+    name: Dependency Security Scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety pip-audit cyclonedx-bom
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Safety check
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check --output safety-report.txt || true
+
+    - name: Run pip-audit
+      run: |
+        pip-audit --format=json --output=pip-audit-report.json || true
+        pip-audit --format=sarif --output=pip-audit-report.sarif || true
+
+    - name: Generate SBOM
+      run: |
+        cyclonedx-py -o scout-sbom.json || true
+
+    - name: Upload SARIF results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: pip-audit-report.sarif
+        category: 'pip-audit'
+
+    - name: Upload security artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: dependency-security-reports
+        path: |
+          safety-report.json
+          safety-report.txt
+          pip-audit-report.json
+          pip-audit-report.sarif
+          scout-sbom.json
+
+  sast-scan:
+    name: Static Application Security Testing
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install SAST tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit[toml] semgrep
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Bandit security scan
+      run: |
+        bandit -r scout/ -f json -o bandit-report.json || true
+        bandit -r scout/ -f sarif -o bandit-report.sarif || true
+
+    - name: Run Semgrep scan
+      run: |
+        semgrep --config=auto scout/ --json --output=semgrep-report.json || true
+        semgrep --config=auto scout/ --sarif --output=semgrep-report.sarif || true
+
+    - name: Upload Bandit SARIF
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: bandit-report.sarif
+        category: 'bandit'
+
+    - name: Upload Semgrep SARIF
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: semgrep-report.sarif
+        category: 'semgrep'
+
+    - name: Upload SAST artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: sast-reports
+        path: |
+          bandit-report.json
+          bandit-report.sarif
+          semgrep-report.json
+          semgrep-report.sarif
+
+  license-scan:
+    name: License Compliance Scan
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install license scanning tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install pip-licenses licensecheck
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Generate license report
+      run: |
+        pip-licenses --format=json --output-file=licenses.json || true
+        pip-licenses --format=csv --output-file=licenses.csv || true
+        pip-licenses --format=markdown --output-file=licenses.md || true
+
+    - name: Check for problematic licenses
+      run: |
+        echo "Checking for problematic licenses..."
+        if [ -f licenses.json ]; then
+          echo "License file found, checking contents..."
+          grep -i "gpl\|agpl\|unknown" licenses.json || echo "No problematic licenses found"
+        else
+          echo "No license file found"
+        fi
+
+    - name: Upload license reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: license-reports
+        path: |
+          licenses.json
+          licenses.csv
+          licenses.md
+
+  container-scan:
+    name: Container Security Scan
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t scout-cli:security-scan .
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'scout-cli:security-scan'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+        category: 'trivy'
+
+    - name: Run Docker Scout
+      uses: docker/scout-action@v1
+      if: github.event_name == 'push'
+      with:
+        command: cves
+        image: scout-cli:security-scan
+        sarif-file: scout-results.sarif
+        summary: true
+
+    - name: Upload Docker Scout SARIF
+      uses: github/codeql-action/upload-sarif@v2
+      if: always() && github.event_name == 'push'
+      with:
+        sarif_file: 'scout-results.sarif'
+        category: 'docker-scout'
+
+  security-report:
+    name: Generate Security Report
+    runs-on: ubuntu-latest
+    needs: [secret-scan, dependency-scan, sast-scan, license-scan]
+    if: always()
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+
+    - name: Generate security summary
+      run: |
+        echo "# Security Scan Summary" > security-summary.md
+        echo "" >> security-summary.md
+        echo "Generated on: $(date)" >> security-summary.md
+        echo "Commit: ${{ github.sha }}" >> security-summary.md
+        echo "" >> security-summary.md
+
+        echo "## Scan Results" >> security-summary.md
+        echo "" >> security-summary.md
+
+        # Check each scan result
+        if [ -d "dependency-security-reports" ]; then
+          echo "### 🔍 Dependency Scan" >> security-summary.md
+          echo "- Safety check completed" >> security-summary.md
+          echo "- pip-audit completed" >> security-summary.md
+          echo "- SBOM generated" >> security-summary.md
+          echo "" >> security-summary.md
+        fi
+
+        if [ -d "sast-reports" ]; then
+          echo "### 🛡️ Static Analysis" >> security-summary.md
+          echo "- Bandit security scan completed" >> security-summary.md
+          echo "- Semgrep analysis completed" >> security-summary.md
+          echo "" >> security-summary.md
+        fi
+
+        if [ -d "license-reports" ]; then
+          echo "### 📋 License Compliance" >> security-summary.md
+          echo "- License scan completed" >> security-summary.md
+          echo "- Compliance check performed" >> security-summary.md
+          echo "" >> security-summary.md
+        fi
+
+        echo "## Recommendations" >> security-summary.md
+        echo "" >> security-summary.md
+        echo "1. Review all security findings in the Security tab" >> security-summary.md
+        echo "2. Address any high or critical vulnerabilities" >> security-summary.md
+        echo "3. Update dependencies regularly" >> security-summary.md
+        echo "4. Monitor for new security advisories" >> security-summary.md
+        echo "" >> security-summary.md
+
+        echo "## Next Steps" >> security-summary.md
+        echo "" >> security-summary.md
+        echo "- [ ] Review SARIF reports in GitHub Security tab" >> security-summary.md
+        echo "- [ ] Update vulnerable dependencies" >> security-summary.md
+        echo "- [ ] Address code security issues" >> security-summary.md
+        echo "- [ ] Verify license compliance" >> security-summary.md
+
+    - name: Upload security summary
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-summary
+        path: security-summary.md
+
+    - name: Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const summary = fs.readFileSync('security-summary.md', 'utf8');
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: summary
+          });
